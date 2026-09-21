@@ -9,26 +9,26 @@ import static com.codeborne.selenide.Selenide.open;
 public class TextBoxTests extends TestBase {
 
     @Test
-    void successfulTestRegistrationFormAllFields () {
+    void successfulTestRegistrationFormAllFields() {
         open("https://demoqa.com/text-box");
-        $("[id=userName]").setValue("Den Magden");
-        $("[id=userEmail]").setValue("denmagden@gmail.com");
-        $("[id=currentAddress]").setValue("Novosibirsk");
-        $("[id=permanentAddress]").setValue("Nsk");
-        $("[id=submit]").click();
+        $("#userName").setValue("Den Magden");
+        $("#userEmail").setValue("denmagden@gmail.com");
+        $("#currentAddress").setValue("Novosibirsk");
+        $("#permanentAddress").setValue("Nsk");
+        $("#submit").click();
 
-        $("[id=output] [id=name]").shouldHave(Condition.text("Name:Den Magden"));
-        $("[id=output] [id=email]").shouldHave(Condition.text("Email:denmagden@gmail.com"));
-        $("[id=output] [id=currentAddress]").shouldHave(Condition.text("Current Address :Novosibirsk"));
-        $("[id=output] [id=permanentAddress]").shouldHave(Condition.text("Permananet Address :Nsk"));
+        $("#output #name").shouldHave(Condition.text("Name:Den Magden"));
+        $("#output #email").shouldHave(Condition.text("Email:denmagden@gmail.com"));
+        $("#output #currentAddress").shouldHave(Condition.text("Current Address :Novosibirsk"));
+        $("#output #permanentAddress").shouldHave(Condition.text("Permananet Address :Nsk"));
     }
 
     @Test
-    void negativeTestRegistrationFormEmail () {
+    void negativeTestRegistrationFormEmail() {
         open("https://demoqa.com/text-box");
-        $("[id=userEmail]").setValue(".c");
-        $("[id=submit]").click();
+        $("#userEmail").setValue(".c");
+        $("#submit").click();
 
-        $("[id=userEmail]").shouldHave(Condition.cssClass("field-error"));
+        $("#userEmail").shouldHave(Condition.cssClass("field-error"));
     }
 }

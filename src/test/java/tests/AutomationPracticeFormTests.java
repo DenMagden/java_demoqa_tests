@@ -11,31 +11,31 @@ import static com.codeborne.selenide.Selenide.open;
 public class AutomationPracticeFormTests extends TestBase {
 
     @Test
-    void successfulTestRegistrationFormAllFields () {
+    void successfulTestRegistrationFormAllFields() {
         open("https://demoqa.com/automation-practice-form");
-        $("[id=firstName]").setValue("Den");
-        $("[id=lastName]").setValue("Magden");
-        $("[id=userEmail]").setValue("denmagden@gmail.com");
+        $("#firstName").setValue("Den");
+        $("#lastName").setValue("Magden");
+        $("#userEmail").setValue("denmagden@gmail.com");
         $("[value=Male]").click();
-        $("[id=userNumber]").setValue("7999333221");
-        $("[id=dateOfBirthInput]").click();
+        $("#userNumber").setValue("7999333221");
+        $("#dateOfBirthInput").click();
         $(".react-datepicker__year-select").selectOption("2000");
         $(".react-datepicker__month-select").selectOption("June");
         $(".react-datepicker__day--015").click();
-        $("[id=subjectsInput]").setValue("E");
+        $("#subjectsInput").setValue("E");
         $(".subjects-auto-complete__menu").$(byText("English")).click();
-        $("[id=hobbies-checkbox-1]").click();
-        $("[id=hobbies-checkbox-2]").click();
-        $("[id=uploadPicture]").uploadFromClasspath("test.png");
-        $("[id=currentAddress]").setValue("Novosibirsk");
-        $("[id=state]").scrollTo();
-        $("[id=state]").click();
-        $("[id=react-select-3-option-0]").click();
-        $("[id=city]").click();
-        $("[id=react-select-4-option-1]").click();
-        $("[id=submit]").click();
+        $("#hobbies-checkbox-1").click();
+        $("#hobbies-checkbox-2").click();
+        $("#uploadPicture").uploadFromClasspath("test.png");
+        $("#currentAddress").setValue("Novosibirsk");
+        $("#state").scrollTo();
+        $("#state").click();
+        $("#react-select-3-option-0").click();
+        $("#city").click();
+        $("#react-select-4-option-1").click();
+        $("#submit").click();
 
-        $("[id=example-modal-sizes-title-lg]").shouldBe();
+        $("#example-modal-sizes-title-lg").shouldBe();
         SelenideElement modal = $(".modal-body");
         modal.$(byText("Student Name")).parent().shouldHave(Condition.text("Den Magden"));
         modal.$(byText("Student Email")).parent().shouldHave(Condition.text("denmagden@gmail.com"));
@@ -50,20 +50,20 @@ public class AutomationPracticeFormTests extends TestBase {
     }
 
     @Test
-    void successfulTestRegistrationFormRequiredFields () {
+    void successfulTestRegistrationFormRequiredFields() {
         open("https://demoqa.com/automation-practice-form");
-        $("[id=firstName]").setValue("Den");
-        $("[id=lastName]").setValue("Magden");
+        $("#firstName").setValue("Den");
+        $("#lastName").setValue("Magden");
         $("[value=Male]").click();
-        $("[id=userNumber]").setValue("7999333221");
-        $("[id=dateOfBirthInput]").click();
+        $("#userNumber").setValue("7999333221");
+        $("#dateOfBirthInput").click();
         $(".react-datepicker__year-select").selectOption("2000");
         $(".react-datepicker__month-select").selectOption("June");
         $(".react-datepicker__day--015").click();
-        $("[id=submit]").scrollTo();
-        $("[id=submit]").click();
+        $("#submit").scrollTo();
+        $("#submit").click();
 
-        $("[id=example-modal-sizes-title-lg]").shouldBe();
+        $("#example-modal-sizes-title-lg").shouldBe();
         SelenideElement modal = $(".modal-body");
         modal.$(byText("Student Name")).parent().shouldHave(Condition.text("Den Magden"));
         modal.$(byText("Student Email")).parent().$$("td").get(1).shouldHave(Condition.empty);
@@ -78,72 +78,72 @@ public class AutomationPracticeFormTests extends TestBase {
     }
 
     @Test
-    void negativeTestRegistrationFormWithoutFirstName () {
+    void negativeTestRegistrationFormWithoutFirstName() {
         open("https://demoqa.com/automation-practice-form");
-        $("[id=lastName]").setValue("Magden");
+        $("#lastName").setValue("Magden");
         $("[value=Male]").click();
-        $("[id=userNumber]").setValue("7999333221");
-        $("[id=dateOfBirthInput]").click();
+        $("#userNumber").setValue("7999333221");
+        $("#dateOfBirthInput").click();
         $(".react-datepicker__year-select").selectOption("2000");
         $(".react-datepicker__month-select").selectOption("June");
         $(".react-datepicker__day--015").click();
-        $("[id=submit]").scrollTo();
-        $("[id=submit]").click();
+        $("#submit").scrollTo();
+        $("#submit").click();
 
-        $("[id=userForm]").shouldHave(Condition.cssClass("was-validated"));
-        $("[id=example-modal-sizes-title-lg]").shouldNotBe();
+        $("#userForm").shouldHave(Condition.cssClass("was-validated"));
+        $("#example-modal-sizes-title-lg").shouldNotBe();
     }
 
     @Test
-    void negativeTestRegistrationFormWithIncompleteNumber () {
+    void negativeTestRegistrationFormWithIncompleteNumber() {
         open("https://demoqa.com/automation-practice-form");
-        $("[id=firstName]").setValue("Den");
-        $("[id=lastName]").setValue("Magden");
+        $("#firstName").setValue("Den");
+        $("#lastName").setValue("Magden");
         $("[value=Male]").click();
-        $("[id=userNumber]").setValue("799933322");
-        $("[id=dateOfBirthInput]").click();
+        $("#userNumber").setValue("799933322");
+        $("#dateOfBirthInput").click();
         $(".react-datepicker__year-select").selectOption("2000");
         $(".react-datepicker__month-select").selectOption("June");
         $(".react-datepicker__day--015").click();
-        $("[id=submit]").scrollTo();
-        $("[id=submit]").click();
+        $("#submit").scrollTo();
+        $("#submit").click();
 
-        $("[id=userForm]").shouldHave(Condition.cssClass("was-validated"));
-        $("[id=example-modal-sizes-title-lg]").shouldNotBe();
+        $("#userForm").shouldHave(Condition.cssClass("was-validated"));
+        $("#example-modal-sizes-title-lg").shouldNotBe();
     }
 
     @Test
-    void negativeTestRegistrationFormWithIncorrectNumber () {
+    void negativeTestRegistrationFormWithIncorrectNumber() {
         open("https://demoqa.com/automation-practice-form");
-        $("[id=firstName]").setValue("Den");
-        $("[id=lastName]").setValue("Magden");
+        $("#firstName").setValue("Den");
+        $("#lastName").setValue("Magden");
         $("[value=Male]").click();
-        $("[id=userNumber]").setValue("qawdrgdcbd");
-        $("[id=dateOfBirthInput]").click();
+        $("#userNumber").setValue("qawdrgdcbd");
+        $("#dateOfBirthInput").click();
         $(".react-datepicker__year-select").selectOption("2000");
         $(".react-datepicker__month-select").selectOption("June");
         $(".react-datepicker__day--015").click();
-        $("[id=submit]").scrollTo();
-        $("[id=submit]").click();
+        $("#submit").scrollTo();
+        $("#submit").click();
 
-        $("[id=userForm]").shouldHave(Condition.cssClass("was-validated"));
-        $("[id=example-modal-sizes-title-lg]").shouldNotBe();
+        $("#userForm").shouldHave(Condition.cssClass("was-validated"));
+        $("#example-modal-sizes-title-lg").shouldNotBe();
     }
 
     @Test
-    void negativeTestRegistrationFormWithoutLastName () {
+    void negativeTestRegistrationFormWithoutLastName() {
         open("https://demoqa.com/automation-practice-form");
-        $("[id=firstName]").setValue("Den");
+        $("#firstName").setValue("Den");
         $("[value=Male]").click();
-        $("[id=userNumber]").setValue("7999333221");
-        $("[id=dateOfBirthInput]").click();
+        $("#userNumber").setValue("7999333221");
+        $("#dateOfBirthInput").click();
         $(".react-datepicker__year-select").selectOption("2000");
         $(".react-datepicker__month-select").selectOption("June");
         $(".react-datepicker__day--015").click();
-        $("[id=submit]").scrollTo();
-        $("[id=submit]").click();
+        $("#submit").scrollTo();
+        $("#submit").click();
 
-        $("[id=userForm]").shouldHave(Condition.cssClass("was-validated"));
-        $("[id=example-modal-sizes-title-lg]").shouldNotBe();
+        $("#userForm").shouldHave(Condition.cssClass("was-validated"));
+        $("#example-modal-sizes-title-lg").shouldNotBe();
     }
 }
