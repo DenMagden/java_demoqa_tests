@@ -24,15 +24,12 @@ public class AutomationPracticeFormTests extends TestBase {
         $(".react-datepicker__day--015").click();
         $("#subjectsInput").setValue("E");
         $(".subjects-auto-complete__menu").$(byText("English")).click();
-        $("#hobbies-checkbox-1").click();
-        $("#hobbies-checkbox-2").click();
-        $("#uploadPicture").uploadFromClasspath("test.png");
-        $("#currentAddress").setValue("Novosibirsk");
-        $("#state").scrollTo();
-        $("#state").click();
-        $("#react-select-3-option-0").click();
-        $("#city").click();
-        $("#react-select-4-option-1").click();
+        $("#hobbiesWrapper").$(byText("Sports")).click();
+        $("#hobbiesWrapper").$(byText("Reading")).click();
+        $("#uploadPicture").uploadFromClasspath("qaguru.png");
+        $("#currentAddress").setValue("Новосибирск, ул. Ленина д. 22");
+        $("#react-select-3-input").setValue("NCR").pressEnter();
+        $("#react-select-4-input").setValue("Gurgaon").pressEnter();
         $("#submit").click();
 
         $("#example-modal-sizes-title-lg").shouldBe();
@@ -44,8 +41,8 @@ public class AutomationPracticeFormTests extends TestBase {
         modal.$(byText("Date of Birth")).parent().shouldHave(Condition.text("15 June,2000"));
         modal.$(byText("Subjects")).parent().shouldHave(Condition.text("English"));
         modal.$(byText("Hobbies")).parent().shouldHave(Condition.text("Sports, Reading"));
-        modal.$(byText("Picture")).parent().shouldHave(Condition.text("test.png"));
-        modal.$(byText("Address")).parent().shouldHave(Condition.text("Novosibirsk"));
+        modal.$(byText("Picture")).parent().shouldHave(Condition.text("qaguru.png"));
+        modal.$(byText("Address")).parent().shouldHave(Condition.text("Новосибирск, ул. Ленина д. 22"));
         modal.$(byText("State and City")).parent().shouldHave(Condition.text("NCR Gurgaon"));
     }
 
@@ -60,8 +57,7 @@ public class AutomationPracticeFormTests extends TestBase {
         $(".react-datepicker__year-select").selectOption("2000");
         $(".react-datepicker__month-select").selectOption("June");
         $(".react-datepicker__day--015").click();
-        $("#submit").scrollTo();
-        $("#submit").click();
+        $("#submit").scrollTo().click();
 
         $("#example-modal-sizes-title-lg").shouldBe();
         SelenideElement modal = $(".modal-body");
@@ -87,8 +83,7 @@ public class AutomationPracticeFormTests extends TestBase {
         $(".react-datepicker__year-select").selectOption("2000");
         $(".react-datepicker__month-select").selectOption("June");
         $(".react-datepicker__day--015").click();
-        $("#submit").scrollTo();
-        $("#submit").click();
+        $("#submit").scrollTo().click();
 
         $("#userForm").shouldHave(Condition.cssClass("was-validated"));
         $("#example-modal-sizes-title-lg").shouldNotBe();
@@ -105,8 +100,7 @@ public class AutomationPracticeFormTests extends TestBase {
         $(".react-datepicker__year-select").selectOption("2000");
         $(".react-datepicker__month-select").selectOption("June");
         $(".react-datepicker__day--015").click();
-        $("#submit").scrollTo();
-        $("#submit").click();
+        $("#submit").scrollTo().click();
 
         $("#userForm").shouldHave(Condition.cssClass("was-validated"));
         $("#example-modal-sizes-title-lg").shouldNotBe();
@@ -123,8 +117,7 @@ public class AutomationPracticeFormTests extends TestBase {
         $(".react-datepicker__year-select").selectOption("2000");
         $(".react-datepicker__month-select").selectOption("June");
         $(".react-datepicker__day--015").click();
-        $("#submit").scrollTo();
-        $("#submit").click();
+        $("#submit").scrollTo().click();
 
         $("#userForm").shouldHave(Condition.cssClass("was-validated"));
         $("#example-modal-sizes-title-lg").shouldNotBe();
@@ -140,8 +133,7 @@ public class AutomationPracticeFormTests extends TestBase {
         $(".react-datepicker__year-select").selectOption("2000");
         $(".react-datepicker__month-select").selectOption("June");
         $(".react-datepicker__day--015").click();
-        $("#submit").scrollTo();
-        $("#submit").click();
+        $("#submit").scrollTo().click();
 
         $("#userForm").shouldHave(Condition.cssClass("was-validated"));
         $("#example-modal-sizes-title-lg").shouldNotBe();
