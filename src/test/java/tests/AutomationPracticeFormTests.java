@@ -7,65 +7,66 @@ import org.junit.jupiter.api.Test;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
+import static testdata.TestData.*;
 
 public class AutomationPracticeFormTests extends TestBase {
 
     @Test
     void successfulTestRegistrationFormAllFields() {
-        open("https://demoqa.com/automation-practice-form");
-        $("#firstName").setValue("Den");
-        $("#lastName").setValue("Magden");
-        $("#userEmail").setValue("denmagden@gmail.com");
-        $("[value=Male]").click();
-        $("#userNumber").setValue("7999333221");
+        open(URL_PRACTICE_FORM);
+        $("#firstName").setValue(FIRST_NAME);
+        $("#lastName").setValue(LAST_NAME);
+        $("#userEmail").setValue(USER_EMAIL);
+        $("[value=" + GENDER + "]").click();
+        $("#userNumber").setValue(PHONE);
         $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").selectOption("2000");
-        $(".react-datepicker__month-select").selectOption("June");
-        $(".react-datepicker__day--015").click();
-        $("#subjectsInput").setValue("E");
-        $(".subjects-auto-complete__menu").$(byText("English")).click();
-        $("#hobbiesWrapper").$(byText("Sports")).click();
-        $("#hobbiesWrapper").$(byText("Reading")).click();
-        $("#uploadPicture").uploadFromClasspath("qaguru.png");
-        $("#currentAddress").setValue("Новосибирск, ул. Ленина д. 22");
-        $("#react-select-3-input").setValue("NCR").pressEnter();
-        $("#react-select-4-input").setValue("Gurgaon").pressEnter();
+        $(".react-datepicker__year-select").selectOption(YEAR);
+        $(".react-datepicker__month-select").selectOption(MONTH);
+        $(".react-datepicker__day--0" + DAY).click();
+        $("#subjectsInput").setValue(FIRST_LETTER_SUBJECT);
+        $(".subjects-auto-complete__menu").$(byText(SUBJECT)).click();
+        $("#hobbiesWrapper").$(byText(HOBBY_1)).click();
+        $("#hobbiesWrapper").$(byText(HOBBY_2)).click();
+        $("#uploadPicture").uploadFromClasspath(PICTURE);
+        $("#currentAddress").setValue(CURRENT_ADDRESS);
+        $("#react-select-3-input").setValue(CITY_1).pressEnter();
+        $("#react-select-4-input").setValue(CITY_2).pressEnter();
         $("#submit").click();
 
         $("#example-modal-sizes-title-lg").shouldBe();
         SelenideElement modal = $(".modal-body");
-        modal.$(byText("Student Name")).parent().shouldHave(Condition.text("Den Magden"));
-        modal.$(byText("Student Email")).parent().shouldHave(Condition.text("denmagden@gmail.com"));
-        modal.$(byText("Gender")).parent().shouldHave(Condition.text("Male"));
-        modal.$(byText("Mobile")).parent().shouldHave(Condition.text("7999333221"));
-        modal.$(byText("Date of Birth")).parent().shouldHave(Condition.text("15 June,2000"));
-        modal.$(byText("Subjects")).parent().shouldHave(Condition.text("English"));
-        modal.$(byText("Hobbies")).parent().shouldHave(Condition.text("Sports, Reading"));
-        modal.$(byText("Picture")).parent().shouldHave(Condition.text("qaguru.png"));
-        modal.$(byText("Address")).parent().shouldHave(Condition.text("Новосибирск, ул. Ленина д. 22"));
-        modal.$(byText("State and City")).parent().shouldHave(Condition.text("NCR Gurgaon"));
+        modal.$(byText("Student Name")).parent().shouldHave(Condition.text(FIRST_NAME + " " + LAST_NAME));
+        modal.$(byText("Student Email")).parent().shouldHave(Condition.text(USER_EMAIL));
+        modal.$(byText("Gender")).parent().shouldHave(Condition.text(GENDER));
+        modal.$(byText("Mobile")).parent().shouldHave(Condition.text(PHONE));
+        modal.$(byText("Date of Birth")).parent().shouldHave(Condition.text(DAY + " " + MONTH + "," + YEAR));
+        modal.$(byText("Subjects")).parent().shouldHave(Condition.text(SUBJECT));
+        modal.$(byText("Hobbies")).parent().shouldHave(Condition.text(HOBBY_1 + ", " + HOBBY_2));
+        modal.$(byText("Picture")).parent().shouldHave(Condition.text(PICTURE));
+        modal.$(byText("Address")).parent().shouldHave(Condition.text(CURRENT_ADDRESS));
+        modal.$(byText("State and City")).parent().shouldHave(Condition.text(CITY_1 + " " + CITY_2));
     }
 
     @Test
     void successfulTestRegistrationFormRequiredFields() {
-        open("https://demoqa.com/automation-practice-form");
-        $("#firstName").setValue("Den");
-        $("#lastName").setValue("Magden");
-        $("[value=Male]").click();
-        $("#userNumber").setValue("7999333221");
+        open(URL_PRACTICE_FORM);
+        $("#firstName").setValue(FIRST_NAME);
+        $("#lastName").setValue(LAST_NAME);
+        $("[value=" + GENDER + "]").click();
+        $("#userNumber").setValue(PHONE);
         $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").selectOption("2000");
-        $(".react-datepicker__month-select").selectOption("June");
-        $(".react-datepicker__day--015").click();
+        $(".react-datepicker__year-select").selectOption(YEAR);
+        $(".react-datepicker__month-select").selectOption(MONTH);
+        $(".react-datepicker__day--0" + DAY).click();
         $("#submit").scrollTo().click();
 
         $("#example-modal-sizes-title-lg").shouldBe();
         SelenideElement modal = $(".modal-body");
-        modal.$(byText("Student Name")).parent().shouldHave(Condition.text("Den Magden"));
+        modal.$(byText("Student Name")).parent().shouldHave(Condition.text(FIRST_NAME + " " + LAST_NAME));
         modal.$(byText("Student Email")).parent().$$("td").get(1).shouldHave(Condition.empty);
-        modal.$(byText("Gender")).parent().shouldHave(Condition.text("Male"));
-        modal.$(byText("Mobile")).parent().shouldHave(Condition.text("7999333221"));
-        modal.$(byText("Date of Birth")).parent().shouldHave(Condition.text("15 June,2000"));
+        modal.$(byText("Gender")).parent().shouldHave(Condition.text(GENDER));
+        modal.$(byText("Mobile")).parent().shouldHave(Condition.text(PHONE));
+        modal.$(byText("Date of Birth")).parent().shouldHave(Condition.text(DAY + " " + MONTH + "," + YEAR));
         modal.$(byText("Subjects")).parent().$$("td").get(1).shouldHave(Condition.empty);
         modal.$(byText("Hobbies")).parent().$$("td").get(1).shouldHave(Condition.empty);
         modal.$(byText("Picture")).parent().$$("td").get(1).shouldHave(Condition.empty);
@@ -75,14 +76,14 @@ public class AutomationPracticeFormTests extends TestBase {
 
     @Test
     void negativeTestRegistrationFormWithoutFirstName() {
-        open("https://demoqa.com/automation-practice-form");
-        $("#lastName").setValue("Magden");
-        $("[value=Male]").click();
-        $("#userNumber").setValue("7999333221");
+        open(URL_PRACTICE_FORM);
+        $("#lastName").setValue(LAST_NAME);
+        $("[value=" + GENDER + "]").click();
+        $("#userNumber").setValue(PHONE);
         $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").selectOption("2000");
-        $(".react-datepicker__month-select").selectOption("June");
-        $(".react-datepicker__day--015").click();
+        $(".react-datepicker__year-select").selectOption(YEAR);
+        $(".react-datepicker__month-select").selectOption(MONTH);
+        $(".react-datepicker__day--0" + DAY).click();
         $("#submit").scrollTo().click();
 
         $("#userForm").shouldHave(Condition.cssClass("was-validated"));
@@ -91,15 +92,15 @@ public class AutomationPracticeFormTests extends TestBase {
 
     @Test
     void negativeTestRegistrationFormWithIncompleteNumber() {
-        open("https://demoqa.com/automation-practice-form");
-        $("#firstName").setValue("Den");
-        $("#lastName").setValue("Magden");
-        $("[value=Male]").click();
-        $("#userNumber").setValue("799933322");
+        open(URL_PRACTICE_FORM);
+        $("#firstName").setValue(FIRST_NAME);
+        $("#lastName").setValue(LAST_NAME);
+        $("[value=" + GENDER + "]").click();
+        $("#userNumber").setValue(PHONE);
         $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").selectOption("2000");
-        $(".react-datepicker__month-select").selectOption("June");
-        $(".react-datepicker__day--015").click();
+        $(".react-datepicker__year-select").selectOption(YEAR);
+        $(".react-datepicker__month-select").selectOption(MONTH);
+        $(".react-datepicker__day--0" + DAY).click();
         $("#submit").scrollTo().click();
 
         $("#userForm").shouldHave(Condition.cssClass("was-validated"));
@@ -108,15 +109,15 @@ public class AutomationPracticeFormTests extends TestBase {
 
     @Test
     void negativeTestRegistrationFormWithIncorrectNumber() {
-        open("https://demoqa.com/automation-practice-form");
-        $("#firstName").setValue("Den");
-        $("#lastName").setValue("Magden");
-        $("[value=Male]").click();
-        $("#userNumber").setValue("qawdrgdcbd");
+        open(URL_PRACTICE_FORM);
+        $("#firstName").setValue(FIRST_NAME);
+        $("#lastName").setValue(LAST_NAME);
+        $("[value=" + GENDER + "]").click();
+        $("#userNumber").setValue(PHONE_INCORRECT);
         $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").selectOption("2000");
-        $(".react-datepicker__month-select").selectOption("June");
-        $(".react-datepicker__day--015").click();
+        $(".react-datepicker__year-select").selectOption(YEAR);
+        $(".react-datepicker__month-select").selectOption(MONTH);
+        $(".react-datepicker__day--0" + DAY).click();
         $("#submit").scrollTo().click();
 
         $("#userForm").shouldHave(Condition.cssClass("was-validated"));
@@ -125,14 +126,14 @@ public class AutomationPracticeFormTests extends TestBase {
 
     @Test
     void negativeTestRegistrationFormWithoutLastName() {
-        open("https://demoqa.com/automation-practice-form");
-        $("#firstName").setValue("Den");
-        $("[value=Male]").click();
-        $("#userNumber").setValue("7999333221");
+        open(URL_PRACTICE_FORM);
+        $("#firstName").setValue(FIRST_NAME);
+        $("[value=" + GENDER + "]").click();
+        $("#userNumber").setValue(PHONE);
         $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").selectOption("2000");
-        $(".react-datepicker__month-select").selectOption("June");
-        $(".react-datepicker__day--015").click();
+        $(".react-datepicker__year-select").selectOption(YEAR);
+        $(".react-datepicker__month-select").selectOption(MONTH);
+        $(".react-datepicker__day--0" + DAY).click();
         $("#submit").scrollTo().click();
 
         $("#userForm").shouldHave(Condition.cssClass("was-validated"));
