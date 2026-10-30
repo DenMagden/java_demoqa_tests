@@ -15,20 +15,18 @@ public class TextBoxTests extends TestBase {
                 .typeUserEmail(USER_EMAIL)
                 .typeCurrentAddress(CURRENT_ADDRESS)
                 .typePermanentAddress(PERMANENT_ADDRESS)
-                .submitForm();
-
-        textBoxPage.checkField("name", USER_NAME);
-        textBoxPage.checkField("email", USER_EMAIL);
-        textBoxPage.checkField("currentAddress", CURRENT_ADDRESS);
-        textBoxPage.checkField("permanentAddress", PERMANENT_ADDRESS);
+                .submitForm()
+                .checkField("name", USER_NAME)
+                .checkField("email", USER_EMAIL)
+                .checkField("currentAddress", CURRENT_ADDRESS)
+                .checkField("permanentAddress", PERMANENT_ADDRESS);
     }
 
     @Test
     void negativeTestRegistrationFormEmail() {
         textBoxPage.openPage(URL_TEXT_BOX)
                 .typeUserEmail(USER_EMAIL_INCORRECT)
-                .submitForm();
-
-        textBoxPage.checkFieldError("userEmail");
+                .submitForm()
+                .checkFieldError("userEmail");
     }
 }

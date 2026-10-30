@@ -48,15 +48,21 @@ public class TextBoxPage {
         return this;
     }
 
-    public void submitForm() {
+    public TextBoxPage submitForm() {
         submitButton.click();
+
+        return this;
     }
 
-    public void checkField(String key, String value) {
+    public TextBoxPage checkField(String key, String value) {
         outputResults.$(byId(key)).shouldHave(text(value));
+
+        return this;
     }
 
-    public void checkFieldError(String fieldId) {
+    public TextBoxPage checkFieldError(String fieldId) {
         $(byId(fieldId)).shouldHave(cssClass("field-error"));
+
+        return this;
     }
 }
