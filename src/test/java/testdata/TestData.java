@@ -12,11 +12,11 @@ public class TestData {
     public static String CURRENT_ADDRESS = "Новосибирск, ул. Ленина д. 22";
     public static String PERMANENT_ADDRESS = "Nsk";
     public static String PHONE = "7999333221";
+    public static String PHONE_INCOMPLETE = "799933322";
     public static String PHONE_INCORRECT = "qawdrgdcbd";
     public static String YEAR = "2020";
     public static String MONTH = "June";
     public static String DAY = "15";
-    public static String FIRST_LETTER_SUBJECT = "E";
     public static String SUBJECT = "English";
     public static String HOBBY_1 = "Sports";
     public static String HOBBY_2 = "Reading";

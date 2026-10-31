@@ -1,142 +1,131 @@
 package tests;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.Test;
 
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
-import static testdata.TestData.*;
+import static testdata.TestData.CITY_1;
+import static testdata.TestData.CITY_2;
+import static testdata.TestData.CURRENT_ADDRESS;
+import static testdata.TestData.DAY;
+import static testdata.TestData.FIRST_NAME;
+import static testdata.TestData.GENDER;
+import static testdata.TestData.HOBBY_1;
+import static testdata.TestData.HOBBY_2;
+import static testdata.TestData.LAST_NAME;
+import static testdata.TestData.MONTH;
+import static testdata.TestData.PHONE;
+import static testdata.TestData.PHONE_INCOMPLETE;
+import static testdata.TestData.PHONE_INCORRECT;
+import static testdata.TestData.PICTURE;
+import static testdata.TestData.SUBJECT;
+import static testdata.TestData.URL_PRACTICE_FORM;
+import static testdata.TestData.USER_EMAIL;
+import static testdata.TestData.YEAR;
 
 public class AutomationPracticeFormTests extends TestBase {
 
     @Test
     void successfulTestRegistrationFormAllFields() {
-        open(URL_PRACTICE_FORM);
-        $("#firstName").setValue(FIRST_NAME);
-        $("#lastName").setValue(LAST_NAME);
-        $("#userEmail").setValue(USER_EMAIL);
-        $("[value=" + GENDER + "]").click();
-        $("#userNumber").setValue(PHONE);
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").selectOption(YEAR);
-        $(".react-datepicker__month-select").selectOption(MONTH);
-        $(".react-datepicker__day--0" + DAY).click();
-        $("#subjectsInput").setValue(FIRST_LETTER_SUBJECT);
-        $(".subjects-auto-complete__menu").$(byText(SUBJECT)).click();
-        $("#hobbiesWrapper").$(byText(HOBBY_1)).click();
-        $("#hobbiesWrapper").$(byText(HOBBY_2)).click();
-        $("#uploadPicture").uploadFromClasspath(PICTURE);
-        $("#currentAddress").setValue(CURRENT_ADDRESS);
-        $("#react-select-3-input").setValue(CITY_1).pressEnter();
-        $("#react-select-4-input").setValue(CITY_2).pressEnter();
-        $("#submit").click();
-
-        $("#example-modal-sizes-title-lg").shouldBe();
-        SelenideElement modal = $(".modal-body");
-        modal.$(byText("Student Name")).parent().shouldHave(Condition.text(FIRST_NAME + " " + LAST_NAME));
-        modal.$(byText("Student Email")).parent().shouldHave(Condition.text(USER_EMAIL));
-        modal.$(byText("Gender")).parent().shouldHave(Condition.text(GENDER));
-        modal.$(byText("Mobile")).parent().shouldHave(Condition.text(PHONE));
-        modal.$(byText("Date of Birth")).parent().shouldHave(Condition.text(DAY + " " + MONTH + "," + YEAR));
-        modal.$(byText("Subjects")).parent().shouldHave(Condition.text(SUBJECT));
-        modal.$(byText("Hobbies")).parent().shouldHave(Condition.text(HOBBY_1 + ", " + HOBBY_2));
-        modal.$(byText("Picture")).parent().shouldHave(Condition.text(PICTURE));
-        modal.$(byText("Address")).parent().shouldHave(Condition.text(CURRENT_ADDRESS));
-        modal.$(byText("State and City")).parent().shouldHave(Condition.text(CITY_1 + " " + CITY_2));
+        automationPracticeFormPage
+                .openPage(URL_PRACTICE_FORM)
+                .typeFirstName(FIRST_NAME)
+                .typeLastName(LAST_NAME)
+                .typeUserEmail(USER_EMAIL)
+                .selectGender(GENDER)
+                .typeUserNumber(PHONE)
+                .setDateOfBirth(DAY, MONTH, YEAR)
+                .selectSubject(SUBJECT)
+                .setHobbies(HOBBY_1)
+                .setHobbies(HOBBY_2)
+                .uploadPicture(PICTURE)
+                .currentAddressTextArea(CURRENT_ADDRESS)
+                .selectState(CITY_1)
+                .selectCity(CITY_2)
+                .submitForm()
+                .checkModalField("Student Name", FIRST_NAME + " " + LAST_NAME)
+                .checkModalField("Student Email", USER_EMAIL)
+                .checkModalField("Gender", GENDER)
+                .checkModalField("Mobile", PHONE)
+                .checkModalField("Date of Birth", DAY + " " + MONTH + "," + YEAR)
+                .checkModalField("Subjects", SUBJECT)
+                .checkModalField("Hobbies", HOBBY_1 + ", " + HOBBY_2)
+                .checkModalField("Picture", PICTURE)
+                .checkModalField("Address", CURRENT_ADDRESS)
+                .checkModalField("State and City", CITY_1 + " " + CITY_2);
     }
 
     @Test
     void successfulTestRegistrationFormRequiredFields() {
-        open(URL_PRACTICE_FORM);
-        $("#firstName").setValue(FIRST_NAME);
-        $("#lastName").setValue(LAST_NAME);
-        $("[value=" + GENDER + "]").click();
-        $("#userNumber").setValue(PHONE);
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").selectOption(YEAR);
-        $(".react-datepicker__month-select").selectOption(MONTH);
-        $(".react-datepicker__day--0" + DAY).click();
-        $("#submit").scrollTo().click();
-
-        $("#example-modal-sizes-title-lg").shouldBe();
-        SelenideElement modal = $(".modal-body");
-        modal.$(byText("Student Name")).parent().shouldHave(Condition.text(FIRST_NAME + " " + LAST_NAME));
-        modal.$(byText("Student Email")).parent().$$("td").get(1).shouldHave(Condition.empty);
-        modal.$(byText("Gender")).parent().shouldHave(Condition.text(GENDER));
-        modal.$(byText("Mobile")).parent().shouldHave(Condition.text(PHONE));
-        modal.$(byText("Date of Birth")).parent().shouldHave(Condition.text(DAY + " " + MONTH + "," + YEAR));
-        modal.$(byText("Subjects")).parent().$$("td").get(1).shouldHave(Condition.empty);
-        modal.$(byText("Hobbies")).parent().$$("td").get(1).shouldHave(Condition.empty);
-        modal.$(byText("Picture")).parent().$$("td").get(1).shouldHave(Condition.empty);
-        modal.$(byText("Address")).parent().$$("td").get(1).shouldHave(Condition.empty);
-        modal.$(byText("State and City")).parent().$$("td").get(1).shouldHave(Condition.empty);
+        automationPracticeFormPage
+                .openPage(URL_PRACTICE_FORM)
+                .typeFirstName(FIRST_NAME)
+                .typeLastName(LAST_NAME)
+                .selectGender(GENDER)
+                .typeUserNumber(PHONE)
+                .setDateOfBirth(DAY, MONTH, YEAR)
+                .submitForm()
+                .checkModalField("Student Name", FIRST_NAME + " " + LAST_NAME)
+                .checkModalField("Student Email", "")
+                .checkModalField("Gender", GENDER)
+                .checkModalField("Mobile", PHONE)
+                .checkModalField("Date of Birth", DAY + " " + MONTH + "," + YEAR)
+                .checkModalField("Subjects", "")
+                .checkModalField("Hobbies", "")
+                .checkModalField("Picture", "")
+                .checkModalField("Address", "")
+                .checkModalField("State and City", "");
     }
 
     @Test
     void negativeTestRegistrationFormWithoutFirstName() {
-        open(URL_PRACTICE_FORM);
-        $("#lastName").setValue(LAST_NAME);
-        $("[value=" + GENDER + "]").click();
-        $("#userNumber").setValue(PHONE);
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").selectOption(YEAR);
-        $(".react-datepicker__month-select").selectOption(MONTH);
-        $(".react-datepicker__day--0" + DAY).click();
-        $("#submit").scrollTo().click();
-
-        $("#userForm").shouldHave(Condition.cssClass("was-validated"));
-        $("#example-modal-sizes-title-lg").shouldNotBe();
+        automationPracticeFormPage
+                .openPage(URL_PRACTICE_FORM)
+                .typeLastName(LAST_NAME)
+                .selectGender(GENDER)
+                .typeUserNumber(PHONE)
+                .setDateOfBirth(DAY, MONTH, YEAR)
+                .submitForm()
+                .checkFormValidated()
+                .checkModalIsNotVisible();
     }
 
     @Test
     void negativeTestRegistrationFormWithIncompleteNumber() {
-        open(URL_PRACTICE_FORM);
-        $("#firstName").setValue(FIRST_NAME);
-        $("#lastName").setValue(LAST_NAME);
-        $("[value=" + GENDER + "]").click();
-        $("#userNumber").setValue(PHONE);
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").selectOption(YEAR);
-        $(".react-datepicker__month-select").selectOption(MONTH);
-        $(".react-datepicker__day--0" + DAY).click();
-        $("#submit").scrollTo().click();
-
-        $("#userForm").shouldHave(Condition.cssClass("was-validated"));
-        $("#example-modal-sizes-title-lg").shouldNotBe();
+        automationPracticeFormPage
+                .openPage(URL_PRACTICE_FORM)
+                .typeFirstName(FIRST_NAME)
+                .typeLastName(LAST_NAME)
+                .selectGender(GENDER)
+                .typeUserNumber(PHONE_INCOMPLETE)
+                .setDateOfBirth(DAY, MONTH, YEAR)
+                .submitForm()
+                .checkFormValidated()
+                .checkModalIsNotVisible();
     }
 
     @Test
     void negativeTestRegistrationFormWithIncorrectNumber() {
-        open(URL_PRACTICE_FORM);
-        $("#firstName").setValue(FIRST_NAME);
-        $("#lastName").setValue(LAST_NAME);
-        $("[value=" + GENDER + "]").click();
-        $("#userNumber").setValue(PHONE_INCORRECT);
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").selectOption(YEAR);
-        $(".react-datepicker__month-select").selectOption(MONTH);
-        $(".react-datepicker__day--0" + DAY).click();
-        $("#submit").scrollTo().click();
-
-        $("#userForm").shouldHave(Condition.cssClass("was-validated"));
-        $("#example-modal-sizes-title-lg").shouldNotBe();
+        automationPracticeFormPage
+                .openPage(URL_PRACTICE_FORM)
+                .typeFirstName(FIRST_NAME)
+                .typeLastName(LAST_NAME)
+                .selectGender(GENDER)
+                .typeUserNumber(PHONE_INCORRECT)
+                .setDateOfBirth(DAY, MONTH, YEAR)
+                .submitForm()
+                .checkFormValidated()
+                .checkModalIsNotVisible();
     }
 
     @Test
     void negativeTestRegistrationFormWithoutLastName() {
-        open(URL_PRACTICE_FORM);
-        $("#firstName").setValue(FIRST_NAME);
-        $("[value=" + GENDER + "]").click();
-        $("#userNumber").setValue(PHONE);
-        $("#dateOfBirthInput").click();
-        $(".react-datepicker__year-select").selectOption(YEAR);
-        $(".react-datepicker__month-select").selectOption(MONTH);
-        $(".react-datepicker__day--0" + DAY).click();
-        $("#submit").scrollTo().click();
-
-        $("#userForm").shouldHave(Condition.cssClass("was-validated"));
-        $("#example-modal-sizes-title-lg").shouldNotBe();
+        automationPracticeFormPage
+                .openPage(URL_PRACTICE_FORM)
+                .typeFirstName(FIRST_NAME)
+                .selectGender(GENDER)
+                .typeUserNumber(PHONE)
+                .setDateOfBirth(DAY, MONTH, YEAR)
+                .submitForm()
+                .checkFormValidated()
+                .checkModalIsNotVisible();
     }
 }
