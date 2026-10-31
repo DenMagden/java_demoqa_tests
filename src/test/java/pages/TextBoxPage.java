@@ -12,8 +12,8 @@ public class TextBoxPage {
     // Elements
     private final SelenideElement userNameInput = $("#userName");
     private final SelenideElement userEmailInput = $("#userEmail");
-    private final SelenideElement currentAddressInput = $("#currentAddress");
-    private final SelenideElement permanentAddressInput = $("#permanentAddress");
+    private final SelenideElement currentAddressTextArea = $("#currentAddress");
+    private final SelenideElement permanentAddressTextArea = $("#permanentAddress");
     private final SelenideElement submitButton = $("#submit");
     private final SelenideElement outputResults = $("#output");
 
@@ -37,13 +37,13 @@ public class TextBoxPage {
     }
 
     public TextBoxPage typeCurrentAddress(String value) {
-        currentAddressInput.setValue(value);
+        currentAddressTextArea.setValue(value);
 
         return this;
     }
 
     public TextBoxPage typePermanentAddress(String value) {
-        permanentAddressInput.setValue(value);
+        permanentAddressTextArea.setValue(value);
 
         return this;
     }

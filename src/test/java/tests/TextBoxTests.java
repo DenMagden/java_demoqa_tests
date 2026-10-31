@@ -7,10 +7,10 @@ import static testdata.TestData.*;
 
 public class TextBoxTests extends TestBase {
 
-
     @Test
     void successfulTestRegistrationFormAllFields() {
-        textBoxPage.openPage(URL_TEXT_BOX)
+        textBoxPage
+                .openPage(URL_TEXT_BOX)
                 .typeUserName(USER_NAME)
                 .typeUserEmail(USER_EMAIL)
                 .typeCurrentAddress(CURRENT_ADDRESS)
@@ -24,7 +24,8 @@ public class TextBoxTests extends TestBase {
 
     @Test
     void negativeTestRegistrationFormEmail() {
-        textBoxPage.openPage(URL_TEXT_BOX)
+        textBoxPage
+                .openPage(URL_TEXT_BOX)
                 .typeUserEmail(USER_EMAIL_INCORRECT)
                 .submitForm()
                 .checkFieldError("userEmail");
