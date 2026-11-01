@@ -1,14 +1,17 @@
 package testdata;
 
+import net.datafaker.Faker;
+
+import java.util.Locale;
+
 public class TestData {
+
     public static String URL_TEXT_BOX = "/text-box";
     public static String URL_PRACTICE_FORM = "/automation-practice-form";
-    public static String USER_NAME = "Den Magden";
-    public static String FIRST_NAME = "Den";
-    public static String LAST_NAME = "Magden";
-    public static String GENDER = "Male";
-    public static String USER_EMAIL = "denmagden@gmail.com";
-    public static String USER_EMAIL_INCORRECT = ".c";
+
+    public static String GENDER = faker.options().option("Male", "Female", "Other");
+//    public static String USER_EMAIL_INCORRECT = ".c";
+    public static String USER_EMAIL_INCORRECT = faker.name() + "@";
     public static String CURRENT_ADDRESS = "Новосибирск, ул. Ленина д. 22";
     public static String PERMANENT_ADDRESS = "Nsk";
     public static String PHONE = "7999333221";
