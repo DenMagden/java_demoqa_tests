@@ -3,15 +3,15 @@ package pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import pages.components.CalendarComponent;
+import pages.components.ResultTableComponent;
 
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class AutomationPracticeFormPage {
     CalendarComponent calendar = new CalendarComponent();
+    ResultTableComponent resultTable = new ResultTableComponent();
 
     // Elements
     private final SelenideElement firstNameInput = $("#firstName");
@@ -27,10 +27,7 @@ public class AutomationPracticeFormPage {
     private final SelenideElement stateInput = $("#react-select-3-input");
     private final SelenideElement cityInput = $("#react-select-4-input");
     private final SelenideElement submitButton = $("#submit");
-    private final SelenideElement modalTitle = $("#example-modal-sizes-title-lg");
-    private final SelenideElement modalBody = $(".modal-body");
     private final SelenideElement userForm = $("#userForm");
-
 
     // Actions
     public AutomationPracticeFormPage openPage(String value) {
@@ -121,13 +118,9 @@ public class AutomationPracticeFormPage {
         return this;
     }
 
-    public AutomationPracticeFormPage checkModalField(String fieldName, String expectedValue) {
-        modalTitle.shouldBe(visible);
-
-        modalBody.$(byText(fieldName))
-                .parent()
-                .$$("td").get(1)
-                .shouldHave(exactText(expectedValue));
+    public AutomationPracticeFormPage checkModalField(
+            String fieldName, String expectedValue) {
+        resultTable.checkField(fieldName, expectedValue);
 
         return this;
     }
@@ -139,8 +132,7 @@ public class AutomationPracticeFormPage {
     }
 
     public AutomationPracticeFormPage checkModalIsNotVisible() {
-        modalTitle.shouldNotBe(visible);
-
+        resultTable.shouldNotBeVisible();
         return this;
     }
 }
