@@ -137,7 +137,6 @@ public class AutomationPracticeFormTests extends TestBase {
                 .typeLastName(lastName)
                 .selectGender(gender)
                 .typeUserNumber(phone)
-                .setDateOfBirth(birthDate)
                 .submitForm()
                 .checkFormValidated()
                 .checkModalIsNotVisible();
