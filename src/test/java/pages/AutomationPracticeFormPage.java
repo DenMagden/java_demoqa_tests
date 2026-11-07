@@ -9,8 +9,6 @@ import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -34,8 +32,6 @@ public class AutomationPracticeFormPage {
             stateInput = $("#react-select-3-input"),
             cityInput = $("#react-select-4-input"),
             submitButton = $("#submit"),
-            modalTitle = $("#example-modal-sizes-title-lg"),
-            modalBody = $(".modal-body"),
             userForm = $("#userForm");
 
     // Actions
@@ -130,8 +126,7 @@ public class AutomationPracticeFormPage {
         return this;
     }
 
-    public AutomationPracticeFormPage checkModalField(
-            String fieldName, String expectedValue) {
+    public AutomationPracticeFormPage checkModalField(String fieldName, String expectedValue) {
         resultTable.checkField(fieldName, expectedValue);
 
         return this;
