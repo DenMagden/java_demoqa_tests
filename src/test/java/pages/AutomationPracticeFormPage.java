@@ -3,6 +3,7 @@ package pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import pages.components.CalendarComponent;
+import pages.components.ResultTableComponent;
 
 import java.time.LocalDate;
 import java.time.format.TextStyle;
@@ -16,6 +17,7 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class AutomationPracticeFormPage {
     CalendarComponent calendar = new CalendarComponent();
+    ResultTableComponent resultTable = new ResultTableComponent();
 
     // Elements
     private final SelenideElement
@@ -128,13 +130,9 @@ public class AutomationPracticeFormPage {
         return this;
     }
 
-    public AutomationPracticeFormPage checkModalField(String fieldName, String expectedValue) {
-        modalTitle.shouldBe(visible);
-
-        modalBody.$(byText(fieldName))
-                .parent()
-                .$$("td").get(1)
-                .shouldHave(exactText(expectedValue));
+    public AutomationPracticeFormPage checkModalField(
+            String fieldName, String expectedValue) {
+        resultTable.checkField(fieldName, expectedValue);
 
         return this;
     }
@@ -146,8 +144,7 @@ public class AutomationPracticeFormPage {
     }
 
     public AutomationPracticeFormPage checkModalIsNotVisible() {
-        modalTitle.shouldNotBe(visible);
-
+        resultTable.shouldNotBeVisible();
         return this;
     }
 }
