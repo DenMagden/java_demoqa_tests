@@ -4,6 +4,10 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import pages.components.CalendarComponent;
 
+import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.Locale;
+
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
@@ -14,23 +18,23 @@ public class AutomationPracticeFormPage {
     CalendarComponent calendar = new CalendarComponent();
 
     // Elements
-    private final SelenideElement firstNameInput = $("#firstName");
-    private final SelenideElement lastNameInput = $("#lastName");
-    private final SelenideElement userEmailInput = $("#userEmail");
-    private final SelenideElement userNumberInput = $("#userNumber");
-    private final SelenideElement dateOfBirthInput = $("#dateOfBirthInput");
-    private final SelenideElement subjectsInput = $("#subjectsInput");
-    private final SelenideElement subjectsMenu = $(".subjects-auto-complete__menu");
-    private final SelenideElement hobbiesContainer = $("#hobbiesWrapper");
-    private final SelenideElement uploadPictureInput = $("#uploadPicture");
-    private final SelenideElement currentAddressTextArea = $("#currentAddress");
-    private final SelenideElement stateInput = $("#react-select-3-input");
-    private final SelenideElement cityInput = $("#react-select-4-input");
-    private final SelenideElement submitButton = $("#submit");
-    private final SelenideElement modalTitle = $("#example-modal-sizes-title-lg");
-    private final SelenideElement modalBody = $(".modal-body");
-    private final SelenideElement userForm = $("#userForm");
-
+    private final SelenideElement
+            firstNameInput = $("#firstName"),
+            lastNameInput = $("#lastName"),
+            userEmailInput = $("#userEmail"),
+            userNumberInput = $("#userNumber"),
+            dateOfBirthInput = $("#dateOfBirthInput"),
+            subjectsInput = $("#subjectsInput"),
+            subjectsMenu = $(".subjects-auto-complete__menu"),
+            hobbiesContainer = $("#hobbiesWrapper"),
+            uploadPictureInput = $("#uploadPicture"),
+            currentAddressTextArea = $("#currentAddress"),
+            stateInput = $("#react-select-3-input"),
+            cityInput = $("#react-select-4-input"),
+            submitButton = $("#submit"),
+            modalTitle = $("#example-modal-sizes-title-lg"),
+            modalBody = $(".modal-body"),
+            userForm = $("#userForm");
 
     // Actions
     public AutomationPracticeFormPage openPage(String value) {
@@ -69,10 +73,13 @@ public class AutomationPracticeFormPage {
         return this;
     }
 
-    public AutomationPracticeFormPage setDateOfBirth(String day, String month, String year) {
+    public AutomationPracticeFormPage setDateOfBirth(LocalDate date) {
         dateOfBirthInput.click();
 
-        calendar.setDate(day, month, year);
+        calendar.setDate(String.format("%02d", date.getDayOfMonth()),
+                date.getMonth().getDisplayName(
+                        TextStyle.FULL, Locale.ENGLISH),
+                String.valueOf(date.getYear()));
 
         return this;
     }
