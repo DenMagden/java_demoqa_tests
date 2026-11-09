@@ -7,7 +7,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import testdata.StateCity;
+import testdata.DataGenerator;
 
 import java.nio.file.Path;
 import java.time.LocalDate;
@@ -16,23 +16,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Stream;
 
-import static testdata.DataGenerator.generateCurrentAddress;
-import static testdata.DataGenerator.generateEmail;
-import static testdata.DataGenerator.generateFirstName;
-import static testdata.DataGenerator.generateGender;
-import static testdata.DataGenerator.generateHobbies;
-import static testdata.DataGenerator.generateLastName;
-import static testdata.DataGenerator.generatePhone;
-import static testdata.DataGenerator.generatePhoneIncomplete;
-import static testdata.DataGenerator.generateStateCity;
-import static testdata.DataGenerator.generateSubject;
-import static testdata.DataGenerator.getRandomBirthDate;
-import static testdata.DataGenerator.getRandomImage;
 import static testdata.TestData.URL_PRACTICE_FORM;
 import static utils.RandomUtils.getRandomString;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AutomationPracticeFormTests extends TestBase {
+
+    private final DataGenerator dataGenerator = new DataGenerator();
 
     private String firstName;
     private String lastName;
@@ -46,23 +36,25 @@ public class AutomationPracticeFormTests extends TestBase {
     private LocalDate birthDate;
     private String subject;
     private List<String> hobbies;
-    private StateCity stateCity;
+    private String state;
+    private String city;
 
     @BeforeEach
     void prepareRandomData() {
-        firstName = generateFirstName();
-        lastName = generateLastName();
-        userEmail = generateEmail();
-        phone = generatePhone();
-        phoneIncomplete = generatePhoneIncomplete();
+        firstName = dataGenerator.generateFirstName();
+        lastName = dataGenerator.generateLastName();
+        userEmail = dataGenerator.generateEmail();
+        phone = dataGenerator.generatePhone();
+        phoneIncomplete = dataGenerator.generatePhoneIncomplete();
         phoneIncorrect = getRandomString(10);
-        picture = getRandomImage();
-        currentAddress = generateCurrentAddress();
-        gender = generateGender();
-        birthDate = getRandomBirthDate();
-        subject = generateSubject();
-        hobbies = generateHobbies();
-        stateCity = generateStateCity();
+        picture = dataGenerator.getRandomImage();
+        currentAddress = dataGenerator.generateCurrentAddress();
+        gender = dataGenerator.getRandomGender();
+        birthDate = dataGenerator.generateBirthDate();
+        subject = dataGenerator.getRandomSubject();
+        hobbies = dataGenerator.getRandomHobbies();
+        state = dataGenerator.getRandomState();
+        city = dataGenerator.getRandomCity(state);
     }
 
     @DisplayName("Проверка всех полей формы регистрации")
@@ -81,8 +73,8 @@ public class AutomationPracticeFormTests extends TestBase {
                 .setHobbies(hobbies.get(1))
                 .uploadPicture(picture)
                 .currentAddressTextArea(currentAddress)
-                .selectState(stateCity.state())
-                .selectCity(stateCity.city())
+                .selectState(state)
+                .selectCity(city)
                 .submitForm()
                 .checkModalField("Student Name", firstName + " " + lastName)
                 .checkModalField("Student Email", userEmail)
@@ -93,7 +85,7 @@ public class AutomationPracticeFormTests extends TestBase {
                 .checkModalField("Hobbies", String.join(", ", hobbies))
                 .checkModalField("Picture", Path.of(picture).getFileName().toString())
                 .checkModalField("Address", currentAddress)
-                .checkModalField("State and City", stateCity.state() + " " + stateCity.city());
+                .checkModalField("State and City", state + " " + city);
     }
 
     @DisplayName("Проверка обязательных полей формы регистрации")

@@ -7,99 +7,90 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class DataGenerator {
 
-    private static final Faker faker = new Faker();
-    private static final Faker fakerRu = new Faker(new Locale("ru"));
+    private final Faker faker = new Faker();
+    private final Faker fakerRu = new Faker(new Locale("ru"));
 
-    public static String generateUserName() {
+    public String generateUserName() {
         return fakerRu.name().fullName();
     }
 
-    public static String generateEmail() {
+    public String generateEmail() {
         return faker.internet().emailAddress();
     }
 
-    public static String generateCurrentAddress() {
+    public String generateCurrentAddress() {
         return fakerRu.address().fullAddress();
     }
 
-    public static String generatePermanentAddress() {
+    public String generatePermanentAddress() {
         return fakerRu.address().streetAddress();
     }
 
-    public static String generateIncorrectEmail() {
+    public String generateIncorrectEmail() {
         return faker.name() + "@";
     }
 
-    public static String generateFirstName() {
+    public String generateFirstName() {
         return fakerRu.name().firstName();
     }
 
-    public static String generateLastName() {
+    public String generateLastName() {
         return fakerRu.name().lastName();
     }
 
-    public static String generatePhone() {
+    public String generatePhone() {
         return faker.number().digits(10);
     }
 
-    public static String generatePhoneIncomplete() {
+    public String generatePhoneIncomplete() {
         return faker.number().digits(9);
     }
 
-    public static String generateGender() {
+    public String getRandomGender() {
         return faker.options().option("Male", "Female", "Other");
     }
 
-    private static final String[] SUBJECTS = {
-            "Accounting", "Arts", "Biology", "Chemistry", "Civics",
-            "Commerce", "Computer Science", "Economics", "English",
-            "Hindi", "History", "Maths", "Physics", "Social Studies"
-    };
-
-    public static String generateSubject() {
-        return faker.options().option(SUBJECTS);
+    public String getRandomSubject() {
+        return faker.options().option(
+                "Accounting", "Arts", "Biology", "Chemistry", "Civics",
+                "Commerce", "Computer Science", "Economics", "English",
+                "Hindi", "History", "Maths", "Physics", "Social Studies"
+        );
     }
 
-    public static List<String> generateHobbies() {
-        List<String> hobbies = new ArrayList<>(
-                List.of("Sports", "Reading", "Music")
-        );
+    private static final List<String> HOBBIES =
+            List.of("Sports", "Reading", "Music");
+
+    public List<String> getRandomHobbies() {
+        List<String> hobbies = new ArrayList<>(HOBBIES);
 
         Collections.shuffle(hobbies);
 
         return hobbies.subList(0, 2);
     }
 
-    private static final Map<String, List<String>> STATE_CITIES = Map.of(
-            "NCR", List.of("Delhi", "Gurgaon", "Noida"),
-            "Uttar Pradesh", List.of("Agra", "Lucknow", "Merrut"),
-            "Haryana", List.of("Karnal", "Panipat"),
-            "Rajasthan", List.of("Jaipur", "Jaiselmer")
-    );
-
-    public static StateCity generateStateCity() {
-        String state = faker.options().option(
-                STATE_CITIES.keySet().toArray(new String[0])
-        );
-
-        List<String> cities = STATE_CITIES.get(state);
-
-        String city = faker.options().option(
-                cities.toArray(new String[0])
-        );
-
-        return new StateCity(state, city);
+    public String getRandomState() {
+        return faker.options().option("NCR", "Uttar Pradesh", "Haryana", "Rajasthan");
     }
 
-    public static LocalDate getRandomBirthDate() {
+    public String getRandomCity(String state) {
+        return switch (state) {
+            case "NCR" -> faker.options().option("Delhi", "Gurgaon", "Noida");
+            case "Uttar Pradesh" -> faker.options().option("Agra", "Lucknow", "Merrut");
+            case "Haryana" -> faker.options().option("Karnal", "Panipat");
+            case "Rajasthan" -> faker.options().option("Jaipur", "Jaiselmer");
+            default -> throw new IllegalArgumentException("Неизвестный штат: " + state);
+        };
+    }
+
+    public LocalDate generateBirthDate() {
         return faker.timeAndDate().birthday();
     }
 
-    public static String getRandomImage() {
+    public String getRandomImage() {
         return faker.options().option("img/qaguru.png",
                 "img/textBox.jpg", "img/toolsQA.png");
     }

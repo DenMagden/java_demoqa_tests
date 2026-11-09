@@ -2,16 +2,14 @@ package tests;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import testdata.DataGenerator;
 
-import static testdata.DataGenerator.generateCurrentAddress;
-import static testdata.DataGenerator.generateEmail;
-import static testdata.DataGenerator.generateIncorrectEmail;
-import static testdata.DataGenerator.generatePermanentAddress;
-import static testdata.DataGenerator.generateUserName;
 import static testdata.TestData.URL_TEXT_BOX;
 
 
 public class TextBoxTests extends TestBase {
+
+    private final DataGenerator dataGenerator = new DataGenerator();
 
     private String userName;
     private String userEmail;
@@ -21,11 +19,11 @@ public class TextBoxTests extends TestBase {
 
     @BeforeEach
     void prepareRandomData() {
-        userName = generateUserName();
-        userEmail = generateEmail();
-        currentAddress =  generateCurrentAddress();
-        permanentAddress = generatePermanentAddress();
-        userEmailIncorrect = generateIncorrectEmail();
+        userName = dataGenerator.generateUserName();
+        userEmail = dataGenerator.generateEmail();
+        currentAddress =  dataGenerator.generateCurrentAddress();
+        permanentAddress = dataGenerator.generatePermanentAddress();
+        userEmailIncorrect = dataGenerator.generateIncorrectEmail();
     }
 
     @Test
