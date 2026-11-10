@@ -4,7 +4,6 @@ import net.datafaker.Faker;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -61,15 +60,8 @@ public class DataGenerator {
         );
     }
 
-    private static final List<String> HOBBIES =
-            List.of("Sports", "Reading", "Music");
-
     public List<String> getRandomHobbies() {
-        List<String> hobbies = new ArrayList<>(HOBBIES);
-
-        Collections.shuffle(hobbies);
-
-        return hobbies.subList(0, 2);
+        return new ArrayList<>(faker.options().subset(2, "Sports", "Reading", "Music"));
     }
 
     public String getRandomState() {
