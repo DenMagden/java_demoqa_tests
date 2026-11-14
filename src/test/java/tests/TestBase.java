@@ -18,6 +18,7 @@ public class TestBase {
         Configuration.browser = "chrome";
         Configuration.browserSize = "1920x1080";
         Configuration.baseUrl = "https://demoqa.com";
+        Configuration.remote = "https://user1:1234@selenoid.qa.guru/wd/hub";
     }
 
     @AfterEach
