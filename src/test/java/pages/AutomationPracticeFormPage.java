@@ -63,7 +63,7 @@ public class AutomationPracticeFormPage {
         return this;
     }
 
-    @Step("Выбрать пол \"{value}\"")
+    @Step("Выбрать пол \"{gender}\"")
     public AutomationPracticeFormPage selectGender(String gender) {
         $("[value='" + gender + "']").click();
 
@@ -89,7 +89,7 @@ public class AutomationPracticeFormPage {
         return this;
     }
 
-    @Step("Выбрать предмет \"{value}\"")
+    @Step("Выбрать предмет \"{subject}\"")
     public AutomationPracticeFormPage selectSubject(String subject) {
         subjectsInput.setValue(subject.substring(0, 1));
         subjectsMenu.$(byText(subject)).click();

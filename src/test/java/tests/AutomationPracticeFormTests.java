@@ -159,7 +159,7 @@ public class AutomationPracticeFormTests extends TestBase {
 
         step("Заполняем поля формы, согласно сценарию", () -> {
             automationPracticeFormPage
-                    .typeLastName(firstName)
+                    .typeFirstName(firstName)
                     .typeLastName(lastName)
                     .selectGender(gender)
                     .typeUserNumber(phone)
