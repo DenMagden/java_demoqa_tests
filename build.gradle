@@ -39,7 +39,7 @@ allure {
 
 tasks.withType(Test).configureEach {
     useJUnitPlatform()
-    systemProperty 'selenide.timeout', '10000'
+    systemProperties(System.getProperties())
 
     testLogging {
         lifecycle {

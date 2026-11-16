@@ -8,12 +8,20 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import pages.AutomationPracticeFormPage;
 import pages.TextBoxPage;
 
 import java.util.Map;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
+import static helpers.TestProperties.baseUrl;
+import static helpers.TestProperties.browser;
+import static helpers.TestProperties.browserSize;
+import static helpers.TestProperties.browserVersion;
+import static helpers.TestProperties.headless;
+import static helpers.TestProperties.remoteCredentials;
+import static helpers.TestProperties.remoteUrl;
 
 public class TestBase {
 
@@ -28,18 +36,46 @@ public class TestBase {
 
     @BeforeAll
     static void configurationBrowser() {
-        Configuration.browser = "chrome";
-        Configuration.browserSize = "1920x1080";
-        Configuration.baseUrl = "https://demoqa.com";
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--disable-dev-shm-usage", "--no-sandbox");
-        chromeOptions.setCapability("se:cdpEnabled", false);
-        chromeOptions.setCapability("selenoid:options", Map.of(
-                "enableVNC", true,
-                "enableVideo", true
-        ));
-        Configuration.browserCapabilities = chromeOptions;
-        Configuration.remote = "https://user1:1234@selenoid.qa.guru/wd/hub";
+        Configuration.browser = browser;
+        Configuration.browserSize = browserSize;
+        Configuration.baseUrl = baseUrl;
+        Configuration.browserVersion = browserVersion;
+        Configuration.headless = headless;
+        Configuration.remote = "https://" + remoteCredentials + "@" + remoteUrl;
+
+
+        switch (browser) {
+            case "chrome" -> {
+                ChromeOptions options = new ChromeOptions();
+
+                options.addArguments(
+                        "--disable-dev-shm-usage",
+                        "--no-sandbox"
+                );
+
+                Configuration.browserCapabilities = options;
+            }
+
+            case "firefox" -> {
+                FirefoxOptions options = new FirefoxOptions();
+
+                Configuration.browserCapabilities = options;
+            }
+
+            default -> throw new IllegalArgumentException(
+                    "Unsupported browser: " + browser
+            );
+        }
+
+        if (Configuration.remote != null) {
+            Configuration.browserCapabilities.setCapability(
+                    "selenoid:options",
+                    Map.of(
+                            "enableVNC", true,
+                            "enableVideo", true
+                    )
+            );
+        }
     }
 
     @AfterEach
