@@ -11,7 +11,7 @@ public class TestProperties {
     public static final String browser =
             System.getProperty("browser", "chrome");
     public static final String browserVersion =
-            System.getProperty("browserVersion", "157.0");
+            System.getProperty("browserVersion", "");
     public static final String browserSize =
             System.getProperty("browserSize", "1920x1080");
     public static final boolean headless =

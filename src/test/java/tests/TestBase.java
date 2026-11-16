@@ -39,9 +39,15 @@ public class TestBase {
         Configuration.browser = browser;
         Configuration.browserSize = browserSize;
         Configuration.baseUrl = baseUrl;
-        Configuration.browserVersion = browserVersion;
+        Configuration.browserVersion = browserVersion.isBlank() ? null : browserVersion;
         Configuration.headless = headless;
-        Configuration.remote = "https://" + remoteCredentials + "@" + remoteUrl;
+        Configuration.remote = null;
+
+        if (remoteUrl != null && !remoteUrl.isBlank()) {
+            Configuration.remote = remoteCredentials.isBlank()
+                    ? "https://" + remoteUrl
+                    : "https://" + remoteCredentials + "@" + remoteUrl;
+        }
 
         switch (browser) {
             case "chrome" -> {
