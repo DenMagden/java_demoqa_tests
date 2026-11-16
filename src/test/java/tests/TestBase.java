@@ -43,7 +43,6 @@ public class TestBase {
         Configuration.headless = headless;
         Configuration.remote = "https://" + remoteCredentials + "@" + remoteUrl;
 
-
         switch (browser) {
             case "chrome" -> {
                 ChromeOptions options = new ChromeOptions();
