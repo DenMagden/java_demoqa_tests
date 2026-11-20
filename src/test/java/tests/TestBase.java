@@ -9,24 +9,27 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import pages.AutomationPracticeFormPage;
-import pages.TextBoxPage;
 
 import java.util.Map;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
-import static helpers.TestProperties.baseUrl;
-import static helpers.TestProperties.browser;
-import static helpers.TestProperties.browserSize;
-import static helpers.TestProperties.browserVersion;
-import static helpers.TestProperties.headless;
-import static helpers.TestProperties.remoteCredentials;
-import static helpers.TestProperties.remoteUrl;
 
 public class TestBase {
 
-    TextBoxPage textBoxPage = new TextBoxPage();
-    AutomationPracticeFormPage automationPracticeFormPage = new AutomationPracticeFormPage();
+    public static final String baseUrl =
+            System.getProperty("baseUrl", "https://demoqa.com");
+    public static final String remoteUrl =
+            System.getProperty("remoteUrl", "");
+    public static final String remoteCredentials =
+            System.getProperty("remoteCredentials", "");
+    public static final String browser =
+            System.getProperty("browser", "chrome");
+    public static final String browserVersion =
+            System.getProperty("browserVersion", "");
+    public static final String browserSize =
+            System.getProperty("browserSize", "1920x1080");
+    public static final boolean headless =
+            Boolean.parseBoolean(System.getProperty("headless", "false"));
 
     @BeforeEach
     void addListener() {

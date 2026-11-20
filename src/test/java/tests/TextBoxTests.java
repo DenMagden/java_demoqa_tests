@@ -5,6 +5,7 @@ import io.qameta.allure.Feature;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import pages.TextBoxPage;
 import testdata.DataGenerator;
 
 import static io.qameta.allure.Allure.step;
@@ -14,6 +15,7 @@ import static testdata.TestData.URL_TEXT_BOX;
 @Feature("Форма регистрации малая")
 public class TextBoxTests extends TestBase {
 
+    TextBoxPage textBoxPage = new TextBoxPage();
     private final DataGenerator dataGenerator = new DataGenerator();
 
     private String userName;
