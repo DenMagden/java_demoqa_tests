@@ -8,8 +8,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.chrome.ChromeOptions;
-import pages.AutomationPracticeFormPage;
-import pages.TextBoxPage;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.util.Map;
 
@@ -17,8 +16,20 @@ import static com.codeborne.selenide.Selenide.closeWebDriver;
 
 public class TestBase {
 
-    TextBoxPage textBoxPage = new TextBoxPage();
-    AutomationPracticeFormPage automationPracticeFormPage = new AutomationPracticeFormPage();
+    public static final String baseUrl =
+            System.getProperty("baseUrl", "https://demoqa.com");
+    public static final String remoteUrl =
+            System.getProperty("remoteUrl", "");
+    public static final String remoteCredentials =
+            System.getProperty("remoteCredentials", "");
+    public static final String browser =
+            System.getProperty("browser", "chrome");
+    public static final String browserVersion =
+            System.getProperty("browserVersion", "");
+    public static final String browserSize =
+            System.getProperty("browserSize", "1920x1080");
+    public static final boolean headless =
+            Boolean.parseBoolean(System.getProperty("headless", "false"));
 
     @BeforeEach
     void addListener() {
@@ -28,18 +39,51 @@ public class TestBase {
 
     @BeforeAll
     static void configurationBrowser() {
-        Configuration.browser = "chrome";
-        Configuration.browserSize = "1920x1080";
-        Configuration.baseUrl = "https://demoqa.com";
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--disable-dev-shm-usage", "--no-sandbox");
-        chromeOptions.setCapability("se:cdpEnabled", false);
-        chromeOptions.setCapability("selenoid:options", Map.of(
-                "enableVNC", true,
-                "enableVideo", true
-        ));
-        Configuration.browserCapabilities = chromeOptions;
-        Configuration.remote = "https://user1:1234@selenoid.qa.guru/wd/hub";
+        Configuration.browser = browser;
+        Configuration.browserSize = browserSize;
+        Configuration.baseUrl = baseUrl;
+        Configuration.browserVersion = browserVersion.isBlank() ? null : browserVersion;
+        Configuration.headless = headless;
+        Configuration.remote = null;
+
+        if (remoteUrl != null && !remoteUrl.isBlank()) {
+            Configuration.remote = remoteCredentials.isBlank()
+                    ? "https://" + remoteUrl
+                    : "https://" + remoteCredentials + "@" + remoteUrl;
+        }
+
+        switch (browser) {
+            case "chrome" -> {
+                ChromeOptions options = new ChromeOptions();
+
+                options.addArguments(
+                        "--disable-dev-shm-usage",
+                        "--no-sandbox"
+                );
+
+                Configuration.browserCapabilities = options;
+            }
+
+            case "firefox" -> {
+                FirefoxOptions options = new FirefoxOptions();
+
+                Configuration.browserCapabilities = options;
+            }
+
+            default -> throw new IllegalArgumentException(
+                    "Unsupported browser: " + browser
+            );
+        }
+
+        if (Configuration.remote != null) {
+            Configuration.browserCapabilities.setCapability(
+                    "selenoid:options",
+                    Map.of(
+                            "enableVNC", true,
+                            "enableVideo", true
+                    )
+            );
+        }
     }
 
     @AfterEach
